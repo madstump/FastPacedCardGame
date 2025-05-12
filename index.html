@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fast-Paced Card Game Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .question {
+            display: none;
+            margin-bottom: 20px;
+        }
+        .question.active {
+            display: block;
+        }
+        .result {
+            display: none;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🃏 Fast-Paced Card Game Builder</h1>
+<div class="question active" id="q1">
+    <p><strong>1. What kind of chaos do you want in your game?</strong></p>
+    <button onclick="nextQuestion('wild')">Random and wild</button><br>
+    <button onclick="nextQuestion('balanced')">Fast but fair</button><br>
+    <button onclick="nextQuestion('bounceback')">Controlled mayhem</button>
+</div>
+
+<div class="question" id="q2">
+    <p><strong>2. How do you want players to win the game?</strong></p>
+    <button onclick="nextQuestion('elimination')">Be the last player standing</button><br>
+    <button onclick="nextQuestion('points')">Earn points to win</button><br>
+    <button onclick="nextQuestion('speed')">Be the fastest to complete something</button>
+</div>
+
+<div class="question" id="q3">
+    <p><strong>3. What kind of card actions sound most fun to you?</strong></p>
+    <button onclick="nextQuestion('swap_steal')">Swap or steal cards</button><br>
+    <button onclick="nextQuestion('attack_defend')">Blow up or cancel someone’s move</button><br>
+    <button onclick="nextQuestion('skip_reverse')">Skip, reverse, or mess with turn order</button><br>
+    <button onclick="nextQuestion('set_collect')">Collect sets or combos</button><br>
+    <button onclick="nextQuestion('bluff')">Hide info or bluff</button><br>
+    <button onclick="nextQuestion('quick_think')">Make quick decisions under pressure</button>
+</div>
+
+<div class="question" id="q4">
+    <p><strong>4. What kind of theme or story does your game have?</strong></p>
+    <button onclick="nextQuestion('silly')">Silly or absurd</button><br>
+    <button onclick="nextQuestion('fantasy')">Fantasy or magical powers</button><br>
+    <button onclick="nextQuestion('scifi')">Sci-fi or future tech</button><br>
+    <button onclick="nextQuestion('real_life')">Real life with a twist</button><br>
+    <button onclick="nextQuestion('no_story')">No story, just fun mechanics</button>
+</div>
+
+<div class="question" id="q5">
+    <p><strong>5. How do you want the game to look physically?</strong></p>
+    <button onclick="showResult('bold')">Bold, colorful, and funny</button><br>
+    <button onclick="showResult('minimal')">Minimal and clean</button><br>
+    <button onclick="showResult('themed')">Themed and detailed</button>
+</div>
+
+<div class="result" id="resultBox">
+    <h2>Your Game Blueprint</h2>
+    <p id="gameSummary"></p>
+    <button onclick="restartQuiz()">🔁 Retry</button>
+</div>
+
+<script>
+    let currentQuestion = 1;
+    let answers = [];
+
+    function nextQuestion(answer) {
+        answers.push(answer);
+        document.getElementById("q" + currentQuestion).classList.remove("active");
+        currentQuestion++;
+        document.getElementById("q" + currentQuestion).classList.add("active");
+    }
+
+    function showResult(finalAnswer) {
+        answers.push(finalAnswer);
+        document.getElementById("q" + currentQuestion).classList.remove("active");
+        document.getElementById("resultBox").style.display = "block";
+        document.getElementById("gameSummary").innerText = generateSummary();
+    }
+
+    function generateSummary() {
+        const chaos = answers[0];
+        const win = answers[1];
+        const action = answers[2];
+        const theme = answers[3];
+        const look = answers[4];
+
+        let chaosText = chaos === 'wild' ? "wild and random" :
+                        chaos === 'balanced' ? "fast but balanced" :
+                        "chaotic but forgiving";
+        let winText = win === 'elimination' ? "eliminating other players" :
+                      win === 'points' ? "scoring points through card combos" :
+                      "racing to finish tasks or rounds";
+        let themeText = theme === 'silly' ? "a silly, meme-filled world" :
+                        theme === 'fantasy' ? "a magical fantasy theme" :
+                        theme === 'scifi' ? "a futuristic sci-fi theme" :
+                        theme === 'real_life' ? "a goofy take on real-life situations" :
+                        "no real story – just gameplay!";
+        let lookText = look === 'bold' ? "bright colors, fun fonts, and cartoons" :
+                        look === 'minimal' ? "clean symbols, easy-to-read text, and simple layout" :
+                        "detailed artwork and immersive design";
+
+        return `Your fast-paced card game should be ${chaosText}, with players winning by ${winText}. The theme is ${themeText}, and the cards should be designed using ${lookText}. Start sketching 3 example cards based on these ideas and write a one-paragraph game summary to get started!`;
+    }
+
+    function restartQuiz() {
+        answers = [];
+        document.getElementById("resultBox").style.display = "none";
+        currentQuestion = 1;
+        document.getElementById("q1").classList.add("active");
+    }
+</script>
+
+</body>
+</html>
